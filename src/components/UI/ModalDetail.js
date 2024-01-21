@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Colors from "../../constants/colors";
 // import MyCarousel from "./Carousel";
-import InnerCarousel from "./InnerCarousel";
 
 function ModalDetail({ visible, onRequestClose, item }) {
   const [innerModalVisible, setInnerModalVisible] = useState(false);
@@ -25,6 +24,7 @@ function ModalDetail({ visible, onRequestClose, item }) {
 
   if (!item) return null;
 
+  const InnerCarousel = require("./InnerCarousel").default;
   return (
     <Modal
       visible={visible}

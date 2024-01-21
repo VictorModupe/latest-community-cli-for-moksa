@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../../constants/colors";
 import PrimaryButton from "../UI/Buttons/PrimaryButton";
 
+
 const NewAlert = ({ onClose }) => (
   <View style={styles.alertContainer}>
     {/* Title Section */}

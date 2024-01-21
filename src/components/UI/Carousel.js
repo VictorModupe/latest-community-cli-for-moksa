@@ -10,7 +10,7 @@ import Carousel from "react-native-snap-carousel";
 import Colors from "../../constants/colors";
 import { ViewPropTypes } from "deprecated-react-native-prop-types";
 import { useState } from "react";
-import ModalDetails from "../ModalDetails";
+// import ModalDetails from "../ModalDetails";
 import ModalDetail from "./ModalDetail";
 
 const data = [

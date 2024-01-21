@@ -2,6 +2,8 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 
 import Colors from "../../constants/colors";
 
+
+
 function Input({
   label,
   keyboardType,

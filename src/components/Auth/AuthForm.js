@@ -1,9 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { useState } from "react";
 
 import Input from "./Input";
 import Header from "../UI/Texts/Header";
 import PrimaryButton from "../UI/Buttons/PrimaryButton";
+
+
 
 function AuthForm({ onSubmit, credentialsInvalid, isLogin }) {
   const [enteredFullName, setEnteredFullName] = useState("");
@@ -39,7 +41,7 @@ function AuthForm({ onSubmit, credentialsInvalid, isLogin }) {
   }
 
   return (
-    <View>
+    <ScrollView>
       <View>
         {!isLogin && (
           <Input
@@ -73,7 +75,7 @@ function AuthForm({ onSubmit, credentialsInvalid, isLogin }) {
           {isLogin ? "Login" : "Create Account"}
         </PrimaryButton>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

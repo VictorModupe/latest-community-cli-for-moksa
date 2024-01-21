@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -7,6 +7,10 @@ import Colors from "../../constants/colors";
 import Header from "../UI/Texts/Header";
 import FlatButton from "../UI/Buttons/FlatButton";
 import NewAlert from "../Alert/NewAlert";
+import WelcomeScreen from "../../screens/WelcomeScreen";
+// import { Image } from "react-native-reanimated/lib/typescript/Animated";
+
+
 
 function AuthContent({ isLogin, onAuthenticate }) {
   const navigation = useNavigation();
@@ -84,11 +88,18 @@ function AuthContent({ isLogin, onAuthenticate }) {
     */
   }
 
+
+ const handleSkipLogin =()=>{
+    navigation.navigate("Welcome",{welcomeScreen: WelcomeScreen});
+ };
   return (
-    <View style={styles.rootScreen}>
-      <View style={styles.login}>
+    <ImageBackground           
+    source={require("../../assets/splash.png")}
+    style={styles.rootScreen}>
+
+      <TouchableOpacity style={[styles.login, styles.skipButton]} onPress={handleSkipLogin}>
         <Header>Skip Login</Header>
-      </View>
+      </TouchableOpacity>
       <View style={styles.headerText}>
         <Header>
           {isLogin
@@ -97,6 +108,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
         </Header>
       </View>
       <View style={styles.authContent}>
+        
         <AuthForm
           isLogin={isLogin}
           onSubmit={submitHandler}
@@ -111,7 +123,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
         </View>
       </View>
       {showAlert && <NewAlert onClose={closeAlertHandler} /> }
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -120,6 +132,9 @@ export default AuthContent;
 const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
+  },
+  skipButton:{
+    marginTop:20,
   },
   login: {
     alignItems: "flex-end",

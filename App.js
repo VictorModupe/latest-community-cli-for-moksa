@@ -1,39 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import * as SplashScreen from "expo-splash-screen";
-import AppLoading from "expo-app-loading";
-import "expo-system-ui";
+import { StatusBar } from "react-native";
+// import AppLoading from "expo-app-loading";
+import Header from "./src/components/UI/Texts/Header";
+
+// import "expo-system-ui";
+import SplashScreen from "react-native-splash-screen";
 import {
   Image,
   ImageBackground,
   SafeAreaView,
-  TouchableOpacity,
   Text,
-  View
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { LinearGradient } from "react-native-linear-gradient";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
+
 import Onboarding from "react-native-onboarding-swiper";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import styles from './GlobalStyles';
 
 import Colors from "./src/constants/colors";
 import LoginScreen from "./src/screens/LoginScreen";
-import WelcomeScreen from "./src/screens/WelcomeScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 
-// import AuthenticatedStack from "./src/navigation/AuthenticatedStack";
-// import AuthStack from "./src/navigation/AuthStack";
-// import MainStack from "./src/navigation/MainStack";
-import styles from "./src/styles/styles";
-import DoneButton from "./src/components/UI/Buttons/DoneButton";
-import NextButton from "./src/components/UI/Buttons/NextButton";
-// import Dots from "./src/components/Dots";
-
-
+import WelcomeScreen from "./src/screens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
 // const Drawer = createDrawerNavigator();
@@ -155,29 +150,33 @@ const Dots = ({ selected }) => (
 );
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    gilroy: require("./src/assets/fonts/Gilroy-Regular.ttf"),
-    "gilroy-bold": require("./src/assets/fonts/Gilroy-Bold.ttf"),
-    tradeGothic: require("./src/assets/fonts/TradeGothic LT Regular.ttf"),
-  });
+  useEffect(() => {
+    const hideSplash = async () => {
+      setTimeout(async () => {
+        await SplashScreen.hideAsync();
+      }, 500);
+    };
+  hideSplash();
+}, []);
+
+
+useEffect(()=>{
+  setTimeout(()=>{
+    SplashScreen.hide()
+  }, 500)
+})
+const [fontsLoaded] = useFonts({
+  gilroyRegular: require('./src/assets/fonts/Gilroy-Regular.ttf'),
+  gilroyBold: require('./src/assets/fonts/Gilroy-Bold.ttf'),
+  tradeGothicLTLight: require('./src/assets/fonts/TradeGothic LT Regular.ttf'),
+});
 
   const [showOnboarding, setShowOnboarding] = useState(true);
+  
+  // useEffect(() => {
+  //   loadFontsAndHideSplash();
+  // }, [fontsLoaded]);
 
-  const loadFontsAndHideSplash = async () => {
-    if (!fontsLoaded) {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-      } catch (error) {
-        console.error("Error during font loading:", error);
-      } finally {
-        await SplashScreen.hideAsync();
-      }
-    }
-  };
-
-  useEffect(() => {
-    loadFontsAndHideSplash();
-  }, [fontsLoaded]);
 
   // if (!fontsLoaded) {
   //   return <AppLoading />;
@@ -186,7 +185,7 @@ export default function App() {
   if (showOnboarding) {
     return (
       <LinearGradient
-        colors={[Colors.primary300, Colors.primary300]}
+        colors={[Colors.primary300, Colors.primary200]}
         style={styles.rootScreen}
       >
         <ImageBackground
@@ -195,44 +194,91 @@ export default function App() {
           style={styles.rootScreen}
           imageStyle={styles.backgroundImage}
         >
-          <Onboarding
-            onSkip={() => setShowOnboarding(false)}
+            <View>
+              <Text style={styles.skip}>
+                <Text style={styles.skip1}>{`Skip `}</Text>
+                <Text style={styles.text}>→</Text>
+              </Text>
+            </View>
+  
+            <Onboarding
+            onSkip={() => setShowOnboarding(true)}
             pages={[
+              
+              
               {
                 backgroundColor: "transparent",
-                image: (
-                  <Image
-                    source={require("./src/assets/images/notifications.png")}
-                    style={styles.onboardingImage}
-                  />
-                ),
-                title: "CUSTOMIZED PUSH NOTIFICATIONS FOR EVERY ACCOUNT",
-                subtitle: "Know when beers are released",
+                  image: (
+                    <View>
+                     <View style={styles.textContainer}>
+                        <Text style={[styles.TakePhoto, styles.knowWhenBeersPosition]}>
+                          CUSTOMIZED PUSH NOTIFICATIONS FOR EVERY ACCOUNT
+                        </Text>
+                        <Text style={[styles.knowWhenBeersWhenReleased]}>
+                          Know when beers are released
+                         </Text>
+                     </View>
+                 
+                   <Image
+                      source={require("./src/assets/images/notifications.png")}
+                      contentFit="cover"
+                      style={styles.onboardingImage}
+                    />
+                    </View>
+                  ),
 
               },
+
               {
-                backgroundColor: "transparent",
-                image: (
-                  <Image
-                    source={require("./src/assets/images/notifications2.png")}
-                    style={styles.onboardingImage}
-                  />
-                ),
-                title: "TAKE PHOTOS AND ADD EXCLUSIVE PHOTO FRAMES",
-                subtitle: "Add some personality to your shots",
+
+              backgroundColor: "transparent",
+              image: (
+                <View>
+                 <View style={styles.textContainer}>
+                    <Text style={[styles.customizedPushNoti, styles.knowWhenBeersPosition]}>
+                      TAKE PHOTOS AND ADD EXCLUSIVE PHOTO FRAMES
+                    </Text>
+                    <Text style={[styles.AddSomePersonality]}>
+                   Add some personality to your shots
+                     </Text>
+                 </View>
+             
+               <Image
+                  source={require("./src/assets/images/notifications2.png")}
+                  contentFit="cover"
+                  style={styles.onboardingImage}
+                />
+                </View>
+              ),
               },
               {
                 backgroundColor: "transparent",
                 image: (
-                  <Image
+                  <View>
+                   <View style={styles.textContainer}>
+                      <Text style={[styles.CheckIn, styles.CheckInAno]}>
+                      CHECK-IN ON SOCIAL                                         </Text>
+                      <Text style={[styles.CheckIn, styles.CheckInAno]}>
+                      MEDIA. YUP, INCLUDING
+                      </Text>
+                      <Text style={[styles.CheckIn, styles.CheckInAno]}>
+                      UPTAPPD
+                      </Text>
+                      <Text style={[styles.TellYour]}>
+                     Tell your people when you're at Moksa
+                       </Text>
+                   </View>
+               
+                 <Image
                     source={require("./src/assets/images/notifications3.png")}
+                    contentFit="cover"
                     style={styles.onboardingImage}
                   />
+                </View>
                 ),
-                title: "CHECK-IN ON SOCIAL MEDIA. YUP, INCLUDING UNTAPPD",
-                subtitle: "Tell your people when you're at Moksa",
-              },
-              // Add more pages as needed
+                },
+              
+
             ]}
             onDone={() => setShowOnboarding(false)}
             skipLabel=""
@@ -243,11 +289,26 @@ export default function App() {
             DotComponent={Dots}
             DoneButtonComponent={CustomDoneButton}
           />
+
+          
+          {/* <Onboarding
+            onSkip={() => setShowOnboarding(false)}
+            pages={onboardingPages}
+            onDone={() => setShowOnboarding(false)}
+            skipLabel=""
+            bottomBarHighlight={false}
+            bottomBarHeight={60}
+            NextButtonComponent={Next}
+            DotComponent={Dots}
+            DoneButtonComponent={CustomDoneButton}
+          /> */}
+
+          
         </ImageBackground>
       </LinearGradient>
     );
   }
-  
+
   return (
     <>
       <StatusBar style="light" />
@@ -272,4 +333,3 @@ export default function App() {
     </>
   );
 }
-
